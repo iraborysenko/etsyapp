@@ -13,6 +13,7 @@ public class Merchandise {
     private String description;
     private String price;
     private String currencyCode;
+    private String imageUrl;
 
     public Merchandise(String listingId, String categoryId, String title, String description,
                        String price, String currencyCode) {
@@ -23,6 +24,7 @@ public class Merchandise {
         this.description = description;
         this.price = price;
         this.currencyCode = currencyCode;
+        this.imageUrl = "none";
     }
 
     public Merchandise () {}
@@ -49,5 +51,13 @@ public class Merchandise {
 
     public String getCurrencyCode() {
         return currencyCode;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

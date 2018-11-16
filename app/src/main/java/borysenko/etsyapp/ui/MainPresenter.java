@@ -6,6 +6,7 @@ import android.util.Log;
 import javax.inject.Inject;
 
 import borysenko.etsyapp.model.Category;
+import borysenko.etsyapp.model.Image;
 import borysenko.etsyapp.model.Merchandise;
 import borysenko.etsyapp.model.SearchCategories;
 import borysenko.etsyapp.model.SearchMerchandise;
@@ -54,17 +55,13 @@ public class MainPresenter implements MainScreen.Presenter {
 
     public void loadSearchResult(String categoryQuery, String productQuery) {
         Call<SearchMerchandise> call =
-                apiInterface.getMerchandiseList(API.KEY, categoryQuery, productQuery);
+                apiInterface.getMerchandiseList(API.KEY, categoryQuery, productQuery, 5, 0);
         call.enqueue(new Callback<SearchMerchandise>() {
             @Override
             public void onResponse(@NonNull Call<SearchMerchandise>call, @NonNull Response<SearchMerchandise> response) {
                 SearchMerchandise merchandiseList = response.body();
-                Log.e("diii", "are we here?");
-                Log.e("ddeiiiiiiissslidksjfcc", merchandiseList.getTotalResults());
                 Merchandise[] merchandises = merchandiseList.getResults();
-                Log.e("merchandise", merchandises[0].getTitle());
                 mView.resultWithNoPic(merchandises);
-
             }
 
             @Override
@@ -75,21 +72,19 @@ public class MainPresenter implements MainScreen.Presenter {
     }
 
     @Override
-    public void getImageForTheMerchandise(String listingId) {
-        Call<String> call = apiInterface.getImage(listingId, API.KEY);
-        call.enqueue(new Callback<String>() {
+    public void getImageForTheMerchandise(String listingId, final int i) {
+        Call<Image> call = apiInterface.getImage(listingId, API.KEY);
+        call.enqueue(new Callback<Image>() {
             @Override
-            public void onResponse(@NonNull Call<String>call, @NonNull Response<String> response) {
-                String result = response.body();
-                Log.e("Hope it is a pic!", result);
-
+            public void onResponse(@NonNull Call<Image>call, @NonNull Response<Image> response) {
+                Image oneImage = response.body();
+                mView.injectImageToMerchandise(oneImage, i);
             }
 
             @Override
-            public void onFailure(@NonNull Call<String>call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Image>call, @NonNull Throwable t) {
                 Log.e("error", t.toString());
             }
         });
     }
-
 }

@@ -3,6 +3,9 @@ package borysenko.etsyapp.ui.TabFragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +20,11 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import borysenko.etsyapp.R;
+import borysenko.etsyapp.adapter.MainRecyclerAdapter;
 import borysenko.etsyapp.dagger.DaggerMainScreenComponent;
 import borysenko.etsyapp.dagger.MainScreenModule;
 import borysenko.etsyapp.model.Category;
+import borysenko.etsyapp.model.Image;
 import borysenko.etsyapp.model.Merchandise;
 import borysenko.etsyapp.ui.MainPresenter;
 import borysenko.etsyapp.ui.MainScreen;
@@ -38,11 +43,14 @@ public class SearchFragment extends Fragment implements MainScreen.View {
     @Inject
     MainPresenter mPresenter;
 
-
     @BindView(R.id.autoCompleteCategory) AutoCompleteTextView autoCompleteCategory;
     @BindView(R.id.product_query) EditText productEdit;
     @BindView(R.id.search_button) Button searchButton;
     Category[] categoriesList;
+    RecyclerView recyclerView;
+    Merchandise[] merchs;
+    int checkpoint=0;
+
 
     public SearchFragment() {
 
@@ -64,6 +72,9 @@ public class SearchFragment extends Fragment implements MainScreen.View {
         View view = inflater.inflate(R.layout.search_fragment, container, false);
         ButterKnife.bind(this, view);
 
+        recyclerView = view.findViewById(R.id.main_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         return view;
     }
 
@@ -75,18 +86,32 @@ public class SearchFragment extends Fragment implements MainScreen.View {
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                        getActivity(), android.R.layout.simple_dropdown_item_1line, catList);
-                autoCompleteCategory.setAdapter(adapter);
-                autoCompleteCategory.setOnItemClickListener(autoItemSelectedListener);
-                categoriesList = categories;
+                getActivity(), android.R.layout.simple_dropdown_item_1line, catList);
+        autoCompleteCategory.setAdapter(adapter);
+        autoCompleteCategory.setOnItemClickListener(autoItemSelectedListener);
+        categoriesList = categories;
     }
 
     @Override
     public void resultWithNoPic(Merchandise[] merchandises) {
+        merchs = merchandises;
         for (Merchandise merchandise: merchandises) {
-            mPresenter.getImageForTheMerchandise(merchandise.getListingId());
+            mPresenter.getImageForTheMerchandise(merchandise.getListingId(), 1);
         }
+    }
 
+    @Override
+    public void injectImageToMerchandise(Image image, int i) {
+        checkpoint+=i;
+        for (Merchandise merchandise: merchs) {
+            if (merchandise.getListingId().equals(image.getListingId())){
+                merchandise.setImageUrl(image.getImageUrl());
+                break;
+            }
+        }
+        if (checkpoint==5) {
+            initRecyclerView(merchs);
+        }
     }
 
     private AdapterView.OnItemClickListener autoItemSelectedListener =
@@ -112,10 +137,11 @@ public class SearchFragment extends Fragment implements MainScreen.View {
             }
         }
 
-//        Log.e("query", categoryQuery);
-
         mPresenter.loadSearchResult(categoryQuery, productQuery);
-
     }
 
+    public void initRecyclerView(Merchandise[] merch) {
+        MainRecyclerAdapter mAdapter = new MainRecyclerAdapter(merch, getActivity().getApplicationContext());
+        recyclerView.setAdapter(mAdapter);
+    }
 }

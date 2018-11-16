@@ -1,5 +1,6 @@
 package borysenko.etsyapp.retrofit;
 
+import borysenko.etsyapp.model.Image;
 import borysenko.etsyapp.model.SearchCategories;
 import borysenko.etsyapp.model.SearchMerchandise;
 import retrofit2.Call;
@@ -20,9 +21,11 @@ public interface ApiInterface {
     @GET("listings/active")
     Call<SearchMerchandise> getMerchandiseList(@Query("api_key") String apiKey,
                                                @Query("category") String categoryQuery,
-                                               @Query("keywords") String productQuery);
+                                               @Query("keywords") String productQuery,
+                                               @Query("limit") int limit,
+                                               @Query("offset") int offset);
 
     @GET("listings/{listing_id}/images")
-    Call<String> getImage(@Path("listing_id") String listingId,
-                          @Query("api_key") String key);
+    Call<Image> getImage(@Path("listing_id") String listingId,
+                         @Query("api_key") String key);
 }

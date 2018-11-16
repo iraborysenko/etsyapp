@@ -2,6 +2,7 @@ package borysenko.etsyapp.ui;
 
 
 import borysenko.etsyapp.model.Category;
+import borysenko.etsyapp.model.Image;
 import borysenko.etsyapp.model.Merchandise;
 
 /**
@@ -15,12 +16,13 @@ public interface MainScreen {
         void setSearchCategoryResult(Category[] search);
 
         void resultWithNoPic(Merchandise[] merchandises);
+
+        void injectImageToMerchandise(Image image, int i);
     }
 
     interface Presenter {
         void loadCategories();
 
-        void getImageForTheMerchandise(String listingId);
+        void getImageForTheMerchandise(String listingId, int i);
     }
-
 }
