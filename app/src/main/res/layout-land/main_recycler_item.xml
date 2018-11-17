@@ -8,25 +8,27 @@
         android:layout_width="120dp"
         android:layout_height="178dp"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="20dp"
-        android:contentDescription="@string/main_image"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="12dp" />
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="20dp"
+        android:contentDescription="@string/main_image" />
 
     <TextView
         android:id="@+id/merch_title"
-        android:layout_width="189dp"
-        android:layout_height="135dp"
+        android:layout_width="390dp"
+        android:layout_height="131dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="28dp"
         android:layout_marginRight="28dp"
+        android:ellipsize="end"
         android:gravity="center"
+        android:maxLines="3"
         android:textSize="20sp"
         android:textStyle="bold" />
 

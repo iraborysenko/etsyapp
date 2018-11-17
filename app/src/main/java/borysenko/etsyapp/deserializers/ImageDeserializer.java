@@ -25,7 +25,7 @@ public class ImageDeserializer implements JsonDeserializer {
         JsonArray array = (JsonArray) jsonObject.get("results");
         JsonObject obj =  array.get(0).getAsJsonObject();
         String listingId = obj.get("listing_id").getAsString();
-        String imageUrl = obj.get("url_75x75").getAsString();
+        String imageUrl = obj.get("url_170x135").getAsString();
 
         return new Image (
                 listingId,

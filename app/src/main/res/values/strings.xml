@@ -6,4 +6,8 @@
     <string name="search">Search</string>
     <string name="enter_query">Enter Query</string>
     <string name="main_image">Main Image</string>
+    <string name="merch_image">Main image</string>
+    <string name="description">Description</string>
+    <string name="price">Price</string>
+    <string name="title">Title</string>
 </resources>

@@ -3,7 +3,6 @@ package borysenko.etsyapp.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,11 +26,11 @@ import butterknife.ButterKnife;
  */
 public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder> {
 
-//    private static ClickListener clickListener;
-private static Merchandise[] mMerch;
+    private static ClickListener clickListener;
+    private static Merchandise[] mMerch;
     private Context mContext;
 
-    static class ViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener, View.OnLongClickListener*/ {
+    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.merch_image)
         ImageView mImage;
         @BindView(R.id.merch_title)
@@ -40,25 +39,16 @@ private static Merchandise[] mMerch;
 
         ViewHolder(View v) {
             super(v);
-//            v.setOnClickListener(this);
-//            v.setOnLongClickListener(this);
+            v.setOnClickListener(this);
             ButterKnife.bind(this, v);
         }
 
-//        @Override
-//        public void onClick(View v) {
-//            movieId = Objects.requireNonNull(mMovies.get(getAdapterPosition())).getId();
-//            dataLang = Objects.requireNonNull(mMovies.get(getAdapterPosition())).getSavedLang();
-//            clickListener.onItemClick(v, movieId, dataLang);
-//        }
-//
-//        @Override
-//        public boolean onLongClick(View v) {
-//            movieId = Objects.requireNonNull(mMovies.get(getAdapterPosition())).getId();
-//            dataLang = Objects.requireNonNull(mMovies.get(getAdapterPosition())).getSavedLang();
-//            clickListener.onItemLongClick(v, movieId, dataLang);
-//            return true;
-//        }
+        @Override
+        public void onClick(View v) {
+            Merchandise merchandise = mMerch[getAdapterPosition()];
+            clickListener.onItemClick(v, merchandise);
+        }
+
     }
 
     public MainRecyclerAdapter(Merchandise[] merch, Context context) {
@@ -82,20 +72,19 @@ private static Merchandise[] mMerch;
         Merchandise merchandise = mMerch[i];
         assert merchandise != null;
 
-        // get poster
-//        RequestOptions options = new RequestOptions()
-//                .skipMemoryCache(true)
-//                .diskCacheStrategy(DiskCacheStrategy.NONE);
-//        Glide.with(mContext)
-//                .asBitmap()
-//                .load(stringToBitmap(movie.getPosterBitmap()))
-//                .apply(options)
-//                .into(movieViewHolder.mPoster);
-//        Log.e("recyclerAdapter", merchandise.getImageUrl());
-        Log.e("recyclerTitle", merchandise.getTitle());
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher_round)
+                .error(R.mipmap.ic_launcher_round)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE);
+
+        Glide.with(mContext)
+                .load(merchandise.getImageUrl())
+                .apply(options)
+                .into(merchViewHolder.mImage);
 
         merchViewHolder.mTitle.setText(merchandise.getTitle());
-
 
     }
 
@@ -104,15 +93,11 @@ private static Merchandise[] mMerch;
         return mMerch.length;
     }
 
-//    public void setOnItemClickListener(ClickListener clickListener) {
-//        MainRecyclerAdapter.clickListener = clickListener;
-//    }
-//
-//    public interface ClickListener {
-//        void onItemClick(View v, String movieId, String dataLang);
-//        void onItemLongClick(View v, String movieId, String dataLang);
-//    }
+    public void setOnItemClickListener(ClickListener clickListener) {
+        MainRecyclerAdapter.clickListener = clickListener;
+    }
 
-
+    public interface ClickListener {
+        void onItemClick(View v, Merchandise merchandise);
+    }
 }
-

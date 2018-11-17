@@ -1,12 +1,14 @@
 package borysenko.etsyapp.model;
 
+
+import java.io.Serializable;
 /**
  * Created by Android Studio.
  * User: Iryna
  * Date: 14/11/18
  * Time: 18:54
  */
-public class Merchandise {
+public class Merchandise implements Serializable {
     private String listingId;
     private String categoryId;
     private String title;

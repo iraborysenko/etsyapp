@@ -1,11 +1,11 @@
 package borysenko.etsyapp.ui.TabFragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +26,7 @@ import borysenko.etsyapp.dagger.MainScreenModule;
 import borysenko.etsyapp.model.Category;
 import borysenko.etsyapp.model.Image;
 import borysenko.etsyapp.model.Merchandise;
+import borysenko.etsyapp.ui.InfoActivity;
 import borysenko.etsyapp.ui.MainPresenter;
 import borysenko.etsyapp.ui.MainScreen;
 import butterknife.BindView;
@@ -124,7 +125,6 @@ public class SearchFragment extends Fragment implements MainScreen.View {
                 }
             };
 
-
     @OnClick(R.id.search_button)
     void getRequestData() {
         String productQuery = productEdit.getText().toString();
@@ -143,5 +143,17 @@ public class SearchFragment extends Fragment implements MainScreen.View {
     public void initRecyclerView(Merchandise[] merch) {
         MainRecyclerAdapter mAdapter = new MainRecyclerAdapter(merch, getActivity().getApplicationContext());
         recyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new MainRecyclerAdapter.ClickListener() {
+            @Override
+            public void onItemClick(View v, Merchandise merchandise) {
+                detailInfo(merchandise);
+            }
+        });
+    }
+
+    private void detailInfo(Merchandise merchandise) {
+        Intent intent = new Intent(getActivity(), InfoActivity.class);
+        intent.putExtra("EXTRA_MERCHANDISE", merchandise);
+        startActivity(intent);
     }
 }
