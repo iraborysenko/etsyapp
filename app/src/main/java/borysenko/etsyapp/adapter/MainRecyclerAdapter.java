@@ -18,6 +18,8 @@ import borysenko.etsyapp.model.Merchandise;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import java.util.Arrays;
+
 /**
  * Created by Android Studio.
  * User: Iryna
@@ -70,21 +72,21 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
     public void onBindViewHolder(@NonNull ViewHolder merchViewHolder, int i) {
 
         Merchandise merchandise = mMerch[i];
-        assert merchandise != null;
+        if (merchandise != null) {
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.mipmap.ic_launcher_round)
+                    .error(R.mipmap.ic_launcher_round)
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE);
 
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.mipmap.ic_launcher_round)
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE);
+            Glide.with(mContext)
+                    .load(merchandise.getImageUrl())
+                    .apply(options)
+                    .into(merchViewHolder.mImage);
 
-        Glide.with(mContext)
-                .load(merchandise.getImageUrl())
-                .apply(options)
-                .into(merchViewHolder.mImage);
-
-        merchViewHolder.mTitle.setText(merchandise.getTitle());
+            merchViewHolder.mTitle.setText(merchandise.getTitle());
+        }
 
     }
 
@@ -100,4 +102,16 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
     public interface ClickListener {
         void onItemClick(View v, Merchandise merchandise);
     }
+
+    public void add(Merchandise merchandise) {
+        mMerch = Arrays.copyOf(mMerch, mMerch.length +1);
+        mMerch[mMerch.length - 1] = merchandise;
+        notifyItemInserted(mMerch.length - 1);
+    }
+
+    public void clear() {
+        mMerch=new Merchandise[0];
+        notifyDataSetChanged();
+    }
+
 }

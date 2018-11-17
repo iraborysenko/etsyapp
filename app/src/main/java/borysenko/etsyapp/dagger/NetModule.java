@@ -11,7 +11,6 @@ import borysenko.etsyapp.deserializers.MerchandiseDeserializer;
 import borysenko.etsyapp.deserializers.SearchCategoriesDeserializer;
 import borysenko.etsyapp.deserializers.SearchMerchandiseDeserializer;
 import borysenko.etsyapp.model.Category;
-import borysenko.etsyapp.model.Image;
 import borysenko.etsyapp.model.Merchandise;
 import borysenko.etsyapp.model.SearchCategories;
 import borysenko.etsyapp.model.SearchMerchandise;
@@ -39,7 +38,7 @@ public class NetModule {
                 .registerTypeAdapter(Category.class, new CategoryDeserializer())
                 .registerTypeAdapter(SearchMerchandise.class, new SearchMerchandiseDeserializer())
                 .registerTypeAdapter(Merchandise.class, new MerchandiseDeserializer())
-                .registerTypeAdapter(Image.class, new ImageDeserializer())
+                .registerTypeAdapter(String.class, new ImageDeserializer())
                 .create();
     }
 

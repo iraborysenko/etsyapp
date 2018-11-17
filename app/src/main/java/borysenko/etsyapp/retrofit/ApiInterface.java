@@ -1,6 +1,5 @@
 package borysenko.etsyapp.retrofit;
 
-import borysenko.etsyapp.model.Image;
 import borysenko.etsyapp.model.SearchCategories;
 import borysenko.etsyapp.model.SearchMerchandise;
 import retrofit2.Call;
@@ -26,6 +25,6 @@ public interface ApiInterface {
                                                @Query("offset") int offset);
 
     @GET("listings/{listing_id}/images")
-    Call<Image> getImage(@Path("listing_id") String listingId,
+    Call<String> getImage(@Path("listing_id") String listingId,
                          @Query("api_key") String key);
 }
