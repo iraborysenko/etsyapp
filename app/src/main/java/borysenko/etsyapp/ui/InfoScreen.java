@@ -1,6 +1,10 @@
 package borysenko.etsyapp.ui;
 
 
+import android.content.Context;
+
+import borysenko.etsyapp.model.Merchandise;
+
 /**
  * Created by Android Studio.
  * User: Iryna
@@ -12,5 +16,6 @@ public interface InfoScreen {
     }
 
     interface Presenter {
+        void saveButtonClicked(Merchandise merchandise, Context context);
     }
 }

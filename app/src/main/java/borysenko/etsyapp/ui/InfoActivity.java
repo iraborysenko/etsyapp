@@ -16,6 +16,9 @@ import borysenko.etsyapp.R;
 import borysenko.etsyapp.dagger.DaggerInfoScreenComponent;
 import borysenko.etsyapp.dagger.InfoScreenModule;
 import borysenko.etsyapp.model.Merchandise;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Android Studio.
@@ -25,10 +28,11 @@ import borysenko.etsyapp.model.Merchandise;
  */
 public class InfoActivity extends AppCompatActivity implements InfoScreen.View {
 
-    private TextView mTitle;
-    private TextView mPrice;
-    private ImageView mImage;
-    private TextView mDescription;
+    @BindView (R.id.title) TextView mTitle;
+    @BindView(R.id.price) TextView mPrice;
+    @BindView(R.id.merch_image) ImageView mImage;
+    @BindView(R.id.description) TextView mDescription;
+    Merchandise merchandiseToSave;
 
     @Inject
     InfoPresenter infoPresenter;
@@ -38,10 +42,8 @@ public class InfoActivity extends AppCompatActivity implements InfoScreen.View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        mTitle = findViewById(R.id.title);
-        mImage = findViewById(R.id.merch_image);
-        mPrice = findViewById(R.id.price);
-        mDescription = findViewById(R.id.description);
+        ButterKnife.bind(this);
+
         mTitle.setMovementMethod(new ScrollingMovementMethod());
 
         DaggerInfoScreenComponent.builder()
@@ -51,6 +53,7 @@ public class InfoActivity extends AppCompatActivity implements InfoScreen.View {
         Merchandise merchandise = (Merchandise) getIntent().getSerializableExtra("EXTRA_MERCHANDISE");
         setMovieInfo(merchandise);
 
+        merchandiseToSave = merchandise;
 //        infoPresenter.loadSelectedMerch(merch);
     }
 
@@ -70,5 +73,10 @@ public class InfoActivity extends AppCompatActivity implements InfoScreen.View {
                 .load(curMerchandise.getImageUrl())
                 .apply(options)
                 .into(mImage);
+    }
+
+    @OnClick(R.id.save_button)
+    public void saveButtonClicked() {
+        infoPresenter.saveButtonClicked(merchandiseToSave, getApplicationContext());
     }
 }
