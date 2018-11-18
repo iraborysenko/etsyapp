@@ -113,5 +113,4 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
         mMerch=new Merchandise[0];
         notifyDataSetChanged();
     }
-
 }

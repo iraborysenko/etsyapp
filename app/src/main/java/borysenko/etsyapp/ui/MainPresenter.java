@@ -61,8 +61,10 @@ public class MainPresenter implements MainScreen.Presenter {
             @Override
             public void onResponse(@NonNull Call<SearchMerchandise>call, @NonNull Response<SearchMerchandise> response) {
                 SearchMerchandise merchandiseList = response.body();
-                Merchandise[] merchandises = merchandiseList.getResults();
-                mView.resultWithNoPic(merchandises);
+                if (merchandiseList != null) {
+                    Merchandise[] merchandises = merchandiseList.getResults();
+                    mView.resultWithNoPic(merchandises);
+                }
             }
 
             @Override

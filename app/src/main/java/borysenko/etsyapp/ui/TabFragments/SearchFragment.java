@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,6 @@ import javax.inject.Inject;
 
 import borysenko.etsyapp.R;
 import borysenko.etsyapp.adapter.MainRecyclerAdapter;
-import borysenko.etsyapp.adapter.PaginationAdapterCallBack;
 import borysenko.etsyapp.adapter.PaginationScrollListener;
 import borysenko.etsyapp.dagger.DaggerMainScreenComponent;
 import borysenko.etsyapp.dagger.MainScreenModule;
@@ -41,7 +41,7 @@ import butterknife.OnClick;
  * Date: 13/11/18
  * Time: 22:27
  */
-public class SearchFragment extends Fragment implements MainScreen.View, PaginationAdapterCallBack {
+public class SearchFragment extends Fragment implements MainScreen.View {
 
     @Inject
     MainPresenter mPresenter;
@@ -58,8 +58,6 @@ public class SearchFragment extends Fragment implements MainScreen.View, Paginat
 
     MainRecyclerAdapter mAdapter;
     LinearLayoutManager linearLayoutManager;
-
-    private boolean isLoading = false;
 
     public SearchFragment() {
 
@@ -137,18 +135,11 @@ public class SearchFragment extends Fragment implements MainScreen.View, Paginat
 
         mAdapter.clear();
         offsetPoint=0;
-        loadNextSearchResult(categoryQuery, productQuery);
-    }
-
-
-    void loadNextSearchResult(String categoryQuery, String productQuery) {
         mPresenter.loadSearchResult(categoryQuery, productQuery, offsetPoint);
-        offsetPoint++;
     }
-
 
     public MainRecyclerAdapter initRecyclerView() {
-        MainRecyclerAdapter mAdapter = new MainRecyclerAdapter(new Merchandise[0], getActivity());
+        final MainRecyclerAdapter mAdapter = new MainRecyclerAdapter(new Merchandise[0], getActivity());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(new MainRecyclerAdapter.ClickListener() {
@@ -158,31 +149,17 @@ public class SearchFragment extends Fragment implements MainScreen.View, Paginat
             }
         });
 
-
-        recyclerView.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
+        recyclerView.addOnScrollListener(new PaginationScrollListener(5,0, linearLayoutManager) {
             @Override
-            protected void loadMoreItems() {
-                try {
-                    isLoading=true;
-                    Thread.sleep(10000);
-                    loadNextSearchResult(categoryQuery, productQuery);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.e("page", String.valueOf(page));
+                Log.e("totalItemsCount", String.valueOf(totalItemsCount));
+                mPresenter.loadSearchResult(categoryQuery, productQuery, offsetPoint);
+                offsetPoint++;
             }
 
-            @Override
-            public boolean isLoading() {
-                return isLoading;
-            }
         });
         return mAdapter;
-    }
-
-    @Override
-    public void retryPageLoad() {
-        offsetPoint = 0;
-        loadNextSearchResult(categoryQuery, productQuery);
     }
 
     private void detailInfo(Merchandise merchandise) {
