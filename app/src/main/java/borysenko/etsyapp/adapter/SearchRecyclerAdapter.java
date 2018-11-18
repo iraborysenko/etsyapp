@@ -26,7 +26,7 @@ import java.util.Arrays;
  * Date: 16/11/18
  * Time: 23:21
  */
-public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder> {
+public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAdapter.ViewHolder> {
 
     private static ClickListener clickListener;
     private static Merchandise[] mMerch;
@@ -53,15 +53,15 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
     }
 
-    public MainRecyclerAdapter(Merchandise[] merch, Context context) {
+    public SearchRecyclerAdapter(Merchandise[] merch, Context context) {
         mMerch = merch;
         mContext = context;
     }
 
     @NonNull
     @Override
-    public MainRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
-                                                             int viewType) {
+    public SearchRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
+                                                               int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.main_recycler_item, parent, false);
 
@@ -96,7 +96,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
     }
 
     public void setOnItemClickListener(ClickListener clickListener) {
-        MainRecyclerAdapter.clickListener = clickListener;
+        SearchRecyclerAdapter.clickListener = clickListener;
     }
 
     public interface ClickListener {

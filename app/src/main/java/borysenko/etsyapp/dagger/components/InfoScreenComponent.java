@@ -1,8 +1,9 @@
-package borysenko.etsyapp.dagger;
+package borysenko.etsyapp.dagger.components;
 
 import javax.inject.Singleton;
 
-import borysenko.etsyapp.ui.InfoActivity;
+import borysenko.etsyapp.dagger.modules.screen.InfoScreenModule;
+import borysenko.etsyapp.ui.info.InfoActivity;
 import dagger.Component;
 
 /**

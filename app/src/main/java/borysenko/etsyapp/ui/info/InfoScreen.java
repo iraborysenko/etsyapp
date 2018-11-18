@@ -1,4 +1,4 @@
-package borysenko.etsyapp.ui;
+package borysenko.etsyapp.ui.info;
 
 
 import android.content.Context;

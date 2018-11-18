@@ -1,4 +1,4 @@
-package borysenko.etsyapp.ui;
+package borysenko.etsyapp.ui.main;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,9 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import borysenko.etsyapp.R;
-import borysenko.etsyapp.ui.TabFragments.SearchFragment;
-import borysenko.etsyapp.ui.TabFragments.SelectedFragment;
-import borysenko.etsyapp.ui.TabFragments.ViewPagerAdapter;
+import borysenko.etsyapp.ui.main.searchtab.SearchFragment;
+import borysenko.etsyapp.ui.main.selectedtab.SelectedFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public Fragment setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        TabsViewPagerAdapter adapter = new TabsViewPagerAdapter(getSupportFragmentManager());
         Fragment searchFragment = new SearchFragment();
         adapter.addFragment(searchFragment, "Search");
         adapter.addFragment(new SelectedFragment(), "Selected");

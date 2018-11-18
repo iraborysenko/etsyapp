@@ -1,8 +1,9 @@
-package borysenko.etsyapp.dagger;
+package borysenko.etsyapp.dagger.components;
 
 import javax.inject.Singleton;
 
 import borysenko.etsyapp.App;
+import borysenko.etsyapp.dagger.modules.AppModule;
 import dagger.Component;
 
 /**

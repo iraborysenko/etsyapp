@@ -1,6 +1,6 @@
-package borysenko.etsyapp.dagger;
+package borysenko.etsyapp.dagger.modules.screen;
 
-import borysenko.etsyapp.ui.InfoScreen;
+import borysenko.etsyapp.ui.info.InfoScreen;
 import dagger.Module;
 import dagger.Provides;
 

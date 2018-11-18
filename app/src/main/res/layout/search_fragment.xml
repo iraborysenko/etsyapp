@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="borysenko.etsyapp.ui.TabFragments.SearchFragment">
+    tools:context="borysenko.etsyapp.ui.main.searchtab.SearchFragment">
 
     <AutoCompleteTextView
         android:id="@+id/autoCompleteCategory"

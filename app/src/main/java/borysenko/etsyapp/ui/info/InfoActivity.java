@@ -1,4 +1,4 @@
-package borysenko.etsyapp.ui;
+package borysenko.etsyapp.ui.info;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +13,8 @@ import com.bumptech.glide.request.RequestOptions;
 import javax.inject.Inject;
 
 import borysenko.etsyapp.R;
-import borysenko.etsyapp.dagger.DaggerInfoScreenComponent;
-import borysenko.etsyapp.dagger.InfoScreenModule;
+import borysenko.etsyapp.dagger.components.DaggerInfoScreenComponent;
+import borysenko.etsyapp.dagger.modules.screen.InfoScreenModule;
 import borysenko.etsyapp.model.Merchandise;
 import butterknife.BindView;
 import butterknife.ButterKnife;

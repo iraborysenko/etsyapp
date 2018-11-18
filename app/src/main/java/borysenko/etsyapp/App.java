@@ -2,8 +2,8 @@ package borysenko.etsyapp;
 
 import android.app.Application;
 
-import borysenko.etsyapp.dagger.AppComponent;
-import borysenko.etsyapp.dagger.DaggerAppComponent;
+import borysenko.etsyapp.dagger.components.AppComponent;
+import borysenko.etsyapp.dagger.components.DaggerAppComponent;
 
 
 /**

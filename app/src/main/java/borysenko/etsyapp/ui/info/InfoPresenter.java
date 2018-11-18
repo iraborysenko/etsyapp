@@ -1,9 +1,6 @@
-package borysenko.etsyapp.ui;
+package borysenko.etsyapp.ui.info;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import javax.inject.Inject;
 

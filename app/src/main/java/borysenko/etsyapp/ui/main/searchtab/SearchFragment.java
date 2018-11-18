@@ -1,4 +1,4 @@
-package borysenko.etsyapp.ui.TabFragments;
+package borysenko.etsyapp.ui.main.searchtab;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,15 +22,13 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import borysenko.etsyapp.R;
-import borysenko.etsyapp.adapter.MainRecyclerAdapter;
+import borysenko.etsyapp.adapter.SearchRecyclerAdapter;
 import borysenko.etsyapp.adapter.PaginationScrollListener;
-import borysenko.etsyapp.dagger.DaggerMainScreenComponent;
-import borysenko.etsyapp.dagger.MainScreenModule;
+import borysenko.etsyapp.dagger.components.DaggerSearchFragmentScreenComponent;
+import borysenko.etsyapp.dagger.modules.screen.SearchFragmentScreenModule;
 import borysenko.etsyapp.model.Category;
 import borysenko.etsyapp.model.Merchandise;
-import borysenko.etsyapp.ui.InfoActivity;
-import borysenko.etsyapp.ui.MainPresenter;
-import borysenko.etsyapp.ui.MainScreen;
+import borysenko.etsyapp.ui.info.InfoActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -41,10 +39,10 @@ import butterknife.OnClick;
  * Date: 13/11/18
  * Time: 22:27
  */
-public class SearchFragment extends Fragment implements MainScreen.View {
+public class SearchFragment extends Fragment implements SearchFragmentScreen.View {
 
     @Inject
-    MainPresenter mPresenter;
+    SearchPresenter mPresenter;
 
     @BindView(R.id.autoCompleteCategory) AutoCompleteTextView autoCompleteCategory;
     @BindView(R.id.product_query) EditText productEdit;
@@ -56,7 +54,7 @@ public class SearchFragment extends Fragment implements MainScreen.View {
     String productQuery;
     String categoryQuery;
 
-    MainRecyclerAdapter mAdapter;
+    SearchRecyclerAdapter mAdapter;
     LinearLayoutManager linearLayoutManager;
 
     public SearchFragment() {
@@ -66,8 +64,8 @@ public class SearchFragment extends Fragment implements MainScreen.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DaggerMainScreenComponent.builder()
-                .mainScreenModule(new MainScreenModule(this))
+        DaggerSearchFragmentScreenComponent.builder()
+                .searchFragmentScreenModule(new SearchFragmentScreenModule(this))
                 .build().inject(this);
         mPresenter.loadCategories();
     }
@@ -138,11 +136,11 @@ public class SearchFragment extends Fragment implements MainScreen.View {
         mPresenter.loadSearchResult(categoryQuery, productQuery, offsetPoint);
     }
 
-    public MainRecyclerAdapter initRecyclerView() {
-        final MainRecyclerAdapter mAdapter = new MainRecyclerAdapter(new Merchandise[0], getActivity());
+    public SearchRecyclerAdapter initRecyclerView() {
+        final SearchRecyclerAdapter mAdapter = new SearchRecyclerAdapter(new Merchandise[0], getActivity());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(new MainRecyclerAdapter.ClickListener() {
+        mAdapter.setOnItemClickListener(new SearchRecyclerAdapter.ClickListener() {
             @Override
             public void onItemClick(View v, Merchandise merchandise) {
                 detailInfo(merchandise);
@@ -157,7 +155,6 @@ public class SearchFragment extends Fragment implements MainScreen.View {
                 mPresenter.loadSearchResult(categoryQuery, productQuery, offsetPoint);
                 offsetPoint++;
             }
-
         });
         return mAdapter;
     }

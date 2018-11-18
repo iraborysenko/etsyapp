@@ -1,15 +1,15 @@
-package borysenko.etsyapp.dagger;
+package borysenko.etsyapp.dagger.modules;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import javax.inject.Singleton;
 
-import borysenko.etsyapp.deserializers.CategoryDeserializer;
-import borysenko.etsyapp.deserializers.ImageDeserializer;
-import borysenko.etsyapp.deserializers.MerchandiseDeserializer;
-import borysenko.etsyapp.deserializers.SearchCategoriesDeserializer;
-import borysenko.etsyapp.deserializers.SearchMerchandiseDeserializer;
+import borysenko.etsyapp.retrofit.deserializers.CategoryDeserializer;
+import borysenko.etsyapp.retrofit.deserializers.ImageDeserializer;
+import borysenko.etsyapp.retrofit.deserializers.MerchandiseDeserializer;
+import borysenko.etsyapp.retrofit.deserializers.SearchCategoriesDeserializer;
+import borysenko.etsyapp.retrofit.deserializers.SearchMerchandiseDeserializer;
 import borysenko.etsyapp.model.Category;
 import borysenko.etsyapp.model.Merchandise;
 import borysenko.etsyapp.model.SearchCategories;

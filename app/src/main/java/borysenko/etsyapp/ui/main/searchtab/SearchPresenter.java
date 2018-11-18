@@ -1,11 +1,11 @@
-package borysenko.etsyapp.ui;
+package borysenko.etsyapp.ui.main.searchtab;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import javax.inject.Inject;
 
-import borysenko.etsyapp.adapter.MainRecyclerAdapter;
+import borysenko.etsyapp.adapter.SearchRecyclerAdapter;
 import borysenko.etsyapp.model.Category;
 import borysenko.etsyapp.model.Merchandise;
 import borysenko.etsyapp.model.SearchCategories;
@@ -22,15 +22,15 @@ import retrofit2.Response;
  * Date: 14/11/18
  * Time: 14:48
  */
-public class MainPresenter implements MainScreen.Presenter {
+public class SearchPresenter implements SearchFragmentScreen.Presenter {
 
-    private MainScreen.View mView;
+    private SearchFragmentScreen.View mView;
 
     @Inject
     ApiInterface apiInterface;
 
     @Inject
-    MainPresenter(MainScreen.View mView) {
+    SearchPresenter(SearchFragmentScreen.View mView) {
         this.mView = mView;
     }
 
@@ -76,7 +76,7 @@ public class MainPresenter implements MainScreen.Presenter {
 
 
     @Override
-    public void getImageForTheMerchandise(final Merchandise merchandise, final MainRecyclerAdapter adapter) {
+    public void getImageForTheMerchandise(final Merchandise merchandise, final SearchRecyclerAdapter adapter) {
         Call<String> call = apiInterface.getImage(merchandise.getListingId(), API.KEY);
         call.enqueue(new Callback<String>() {
             @Override

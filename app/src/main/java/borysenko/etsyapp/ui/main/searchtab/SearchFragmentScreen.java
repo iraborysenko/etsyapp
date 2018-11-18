@@ -1,7 +1,7 @@
-package borysenko.etsyapp.ui;
+package borysenko.etsyapp.ui.main.searchtab;
 
 
-import borysenko.etsyapp.adapter.MainRecyclerAdapter;
+import borysenko.etsyapp.adapter.SearchRecyclerAdapter;
 import borysenko.etsyapp.model.Category;
 import borysenko.etsyapp.model.Merchandise;
 
@@ -11,7 +11,7 @@ import borysenko.etsyapp.model.Merchandise;
  * Date: 14/11/18
  * Time: 14:48
  */
-public interface MainScreen {
+public interface SearchFragmentScreen {
     interface View {
         void setSearchCategoryResult(Category[] search);
 
@@ -21,6 +21,6 @@ public interface MainScreen {
     interface Presenter {
         void loadCategories();
 
-        void getImageForTheMerchandise(Merchandise merchandise, MainRecyclerAdapter adapter);
+        void getImageForTheMerchandise(Merchandise merchandise, SearchRecyclerAdapter adapter);
     }
 }

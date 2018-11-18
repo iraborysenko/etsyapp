@@ -1,4 +1,4 @@
-package borysenko.etsyapp.dagger;
+package borysenko.etsyapp.dagger.modules;
 
 import android.content.Context;
 
