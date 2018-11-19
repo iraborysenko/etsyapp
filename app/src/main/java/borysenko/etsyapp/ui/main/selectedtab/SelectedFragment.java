@@ -22,8 +22,6 @@ import borysenko.etsyapp.dagger.components.DaggerSelectedFragmentScreenComponent
 import borysenko.etsyapp.model.Merchandise;
 import borysenko.etsyapp.database.DataBaseManager;
 import borysenko.etsyapp.ui.info.InfoActivity;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by Android Studio.
@@ -56,12 +54,12 @@ public class SelectedFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.selected_fragment, container, false);
-        ButterKnife.bind(this, view);
 
         recyclerView = view.findViewById(R.id.selected_recycler_view);
         linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         mAdapter = initRecyclerView();
+        mDataManager.setAdapter(mAdapter);
 
         mAdapter.addAll(mDataManager.loadAllData());
 
@@ -84,13 +82,6 @@ public class SelectedFragment extends Fragment {
 
         return mAdapter;
     }
-
-    @OnClick(R.id.reload_button)
-    void reloadSavedList() {
-        mAdapter.clear();
-        mAdapter.addAll(mDataManager.loadAllData());
-    }
-
 
     private void detailInfo(Merchandise merchandise) {
         Intent intent = new Intent(getActivity(), InfoActivity.class);

@@ -9,6 +9,7 @@ import javax.inject.Singleton;
 
 import borysenko.etsyapp.dagger.ApplicationContext;
 import borysenko.etsyapp.model.Merchandise;
+import borysenko.etsyapp.ui.main.selectedtab.SelectedRecyclerAdapter;
 
 /**
  * Created by Android Studio.
@@ -21,6 +22,7 @@ public class DataBaseManager {
 
     private Context mContext;
     private DB mDb;
+    private SelectedRecyclerAdapter mAdapter;
 
     @Inject
     public DataBaseManager(@ApplicationContext Context context,
@@ -35,9 +37,20 @@ public class DataBaseManager {
 
     public void saveMerchandise(Merchandise merchandise) {
         mDb.addMerchandise(merchandise);
+        reloadSelectedList();
     }
 
     public void removeMerchandise(Merchandise selectedMerchandise) {
         mDb.deleteMerchandise(selectedMerchandise);
+        reloadSelectedList();
+    }
+
+    public void setAdapter(SelectedRecyclerAdapter mAdapter) {
+        this.mAdapter = mAdapter;
+    }
+
+    private void reloadSelectedList() {
+        mAdapter.clear();
+        mAdapter.addAll(loadAllData());
     }
 }

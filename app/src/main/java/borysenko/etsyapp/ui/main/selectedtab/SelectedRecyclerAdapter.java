@@ -106,7 +106,7 @@ public class SelectedRecyclerAdapter extends RecyclerView.Adapter<SelectedRecycl
         notifyItemInserted(mMerchs.size() - 1);
     }
 
-    void addAll(List<Merchandise> merchandises) {
+    public void addAll(List<Merchandise> merchandises) {
         for (Merchandise merch: merchandises) {
             add(merch);
         }

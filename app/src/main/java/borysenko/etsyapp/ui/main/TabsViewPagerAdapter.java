@@ -17,7 +17,7 @@ public class TabsViewPagerAdapter extends FragmentPagerAdapter {
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
 
-    public TabsViewPagerAdapter(FragmentManager manager) {
+    TabsViewPagerAdapter(FragmentManager manager) {
         super(manager);
     }
 
@@ -31,7 +31,7 @@ public class TabsViewPagerAdapter extends FragmentPagerAdapter {
         return mFragmentList.size();
     }
 
-    public void addFragment(Fragment fragment, String title) {
+    void addFragment(Fragment fragment, String title) {
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
     }

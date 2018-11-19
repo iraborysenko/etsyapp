@@ -5,27 +5,12 @@
     android:layout_height="match_parent"
     tools:context="borysenko.etsyapp.ui.main.selectedtab.SelectedFragment">
 
-    <Button
-        android:id="@+id/reload_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginRight="18dp"
-        android:background="#d66e1e"
-        android:padding="5dp"
-        android:text="@string/reload"
-        android:textStyle="bold" />
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_below="@id/search_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp" >
+        android:layout_marginTop="15dp" >
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/selected_recycler_view"

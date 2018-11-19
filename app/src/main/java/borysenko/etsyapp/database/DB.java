@@ -137,7 +137,6 @@ public class DB extends SQLiteOpenHelper {
 
     void addMerchandise(Merchandise merchandise) {
 
-        Log.e("tag", "message2");
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
