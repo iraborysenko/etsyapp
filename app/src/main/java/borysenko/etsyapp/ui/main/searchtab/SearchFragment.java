@@ -1,5 +1,6 @@
 package borysenko.etsyapp.ui.main.searchtab;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -99,7 +101,6 @@ public class SearchFragment extends Fragment implements SearchFragmentScreen.Vie
         categoriesList = categories;
     }
 
-
     //get result by request. doesn't include pictures
     @Override
     public void resultWithNoPic(Merchandise[] merchandises) {
@@ -132,6 +133,7 @@ public class SearchFragment extends Fragment implements SearchFragmentScreen.Vie
                 break;
             }
         }
+        hideKeyBoard();
 
         mAdapter.clear();
         offsetPoint=0;
@@ -164,5 +166,11 @@ public class SearchFragment extends Fragment implements SearchFragmentScreen.Vie
         intent.putExtra("EXTRA_MERCHANDISE", merchandise);
         intent.putExtra("EXTRA_FRAGMENT", "Search");
         startActivity(intent);
+    }
+
+    public void hideKeyBoard() {
+        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        assert imm != null;
+        imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
     }
 }

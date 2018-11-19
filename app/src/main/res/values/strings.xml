@@ -13,4 +13,5 @@
     <string name="save_data">Save data</string>
     <string name="search_case">Save Data</string>
     <string name="selected_case">Delete</string>
+    <string name="reload">Reload</string>
 </resources>

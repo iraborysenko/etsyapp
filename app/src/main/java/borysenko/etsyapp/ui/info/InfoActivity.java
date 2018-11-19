@@ -3,9 +3,11 @@ package borysenko.etsyapp.ui.info;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
+import android.view.Gravity;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -17,7 +19,6 @@ import borysenko.etsyapp.App;
 import borysenko.etsyapp.R;
 import borysenko.etsyapp.dagger.components.DaggerInfoScreenComponent;
 import borysenko.etsyapp.dagger.components.InfoScreenComponent;
-import borysenko.etsyapp.dagger.modules.screen.InfoScreenModule;
 import borysenko.etsyapp.model.Merchandise;
 import borysenko.etsyapp.database.DataBaseManager;
 import butterknife.BindView;
@@ -94,11 +95,25 @@ public class InfoActivity extends AppCompatActivity {
                 .into(mImage);
     }
 
+    public void showToast(String text) {
+        Toast toast = Toast.makeText(getApplicationContext(), text,
+                Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM, 0, 30);
+        toast.show();
+    }
+
     //save of remove data
     @OnClick(R.id.changing_button)
     public void saveButtonClicked() {
-        if(trigger.equals("Search")) mDataManager.saveMerchandise(selectedMerchandise);
-        else if (trigger.equals("Selected")) { mDataManager.removeMerchandise(selectedMerchandise);}
+        if(trigger.equals("Search")) {
+            mDataManager.saveMerchandise(selectedMerchandise);
+            showToast("Item Successfully Saved");
+
+        } else if (trigger.equals("Selected")) {
+            mDataManager.removeMerchandise(selectedMerchandise);
+            showToast("Idem Deleted");
+        }
+
         mButton.setEnabled(false);
     }
 }
