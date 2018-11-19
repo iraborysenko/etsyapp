@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +21,10 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import borysenko.etsyapp.R;
-import borysenko.etsyapp.adapter.SearchRecyclerAdapter;
-import borysenko.etsyapp.adapter.PaginationScrollListener;
 import borysenko.etsyapp.dagger.components.DaggerSearchFragmentScreenComponent;
 import borysenko.etsyapp.dagger.modules.screen.SearchFragmentScreenModule;
+import borysenko.etsyapp.ui.main.searchtab.adapter.PaginationScrollListener;
+import borysenko.etsyapp.ui.main.searchtab.adapter.SearchRecyclerAdapter;
 import borysenko.etsyapp.model.Category;
 import borysenko.etsyapp.model.Merchandise;
 import borysenko.etsyapp.ui.info.InfoActivity;
@@ -100,6 +99,8 @@ public class SearchFragment extends Fragment implements SearchFragmentScreen.Vie
         categoriesList = categories;
     }
 
+
+    //get result by request. doesn't include pictures
     @Override
     public void resultWithNoPic(Merchandise[] merchandises) {
         merchs = merchandises;
@@ -108,6 +109,7 @@ public class SearchFragment extends Fragment implements SearchFragmentScreen.Vie
         }
     }
 
+    //verify if category item was selected
     private AdapterView.OnItemClickListener autoItemSelectedListener =
             new AdapterView.OnItemClickListener()
             {
@@ -118,7 +120,7 @@ public class SearchFragment extends Fragment implements SearchFragmentScreen.Vie
                 }
             };
 
-
+    //get data for request
     @OnClick(R.id.search_button)
     void getRequestData() {
         productQuery = productEdit.getText().toString();
@@ -150,8 +152,6 @@ public class SearchFragment extends Fragment implements SearchFragmentScreen.Vie
         recyclerView.addOnScrollListener(new PaginationScrollListener(5,0, linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                Log.e("page", String.valueOf(page));
-                Log.e("totalItemsCount", String.valueOf(totalItemsCount));
                 mPresenter.loadSearchResult(categoryQuery, productQuery, offsetPoint);
                 offsetPoint++;
             }
@@ -162,6 +162,7 @@ public class SearchFragment extends Fragment implements SearchFragmentScreen.Vie
     private void detailInfo(Merchandise merchandise) {
         Intent intent = new Intent(getActivity(), InfoActivity.class);
         intent.putExtra("EXTRA_MERCHANDISE", merchandise);
+        intent.putExtra("EXTRA_FRAGMENT", "Search");
         startActivity(intent);
     }
 }

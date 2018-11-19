@@ -1,7 +1,7 @@
 package borysenko.etsyapp.ui.main.searchtab;
 
 
-import borysenko.etsyapp.adapter.SearchRecyclerAdapter;
+import borysenko.etsyapp.ui.main.searchtab.adapter.SearchRecyclerAdapter;
 import borysenko.etsyapp.model.Category;
 import borysenko.etsyapp.model.Merchandise;
 

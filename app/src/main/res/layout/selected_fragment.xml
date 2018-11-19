@@ -5,12 +5,16 @@
     android:layout_height="match_parent"
     tools:context="borysenko.etsyapp.ui.main.selectedtab.SelectedFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_below="@id/search_button"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="second"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        android:layout_centerInParent="true"/>
+        android:layout_marginTop="60dp" >
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/selected_recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 </RelativeLayout>

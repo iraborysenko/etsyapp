@@ -1,6 +1,6 @@
 package borysenko.etsyapp.dagger.modules.screen;
 
-import borysenko.etsyapp.ui.main.selectedtab.SelectedFragmentScreen;
+import borysenko.etsyapp.ui.main.selectedtab.SelectedFragment;
 import dagger.Module;
 import dagger.Provides;
 
@@ -12,14 +12,14 @@ import dagger.Provides;
  */
 @Module()
 public class SelectedFragmentScreenModule {
-    private final SelectedFragmentScreen.View mView;
+    private SelectedFragment mFragment;
 
-    public SelectedFragmentScreenModule(SelectedFragmentScreen.View mView) {
-        this.mView = mView;
+    public SelectedFragmentScreenModule(SelectedFragment activity) {
+        mFragment = activity;
     }
 
     @Provides
-    SelectedFragmentScreen.View providesSelectedFragmentScreenView() {
-        return mView;
+    SelectedFragment provideActivity() {
+        return mFragment;
     }
 }

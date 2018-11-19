@@ -1,4 +1,4 @@
-package borysenko.etsyapp.adapter;
+package borysenko.etsyapp.ui.main.searchtab.adapter;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,21 +11,15 @@ import android.support.v7.widget.RecyclerView;
  */
 public abstract class PaginationScrollListener extends RecyclerView.OnScrollListener {
 
-
-    // The minimum number of items to have below your current scroll position before loading more.
-    private int visibleThreshold = 5;
-    // The current offset index of data you have loaded
-    private int currentPage = 0;
-    // The total number of items in the dataset after the last load
+    private int visibleThreshold;
+    private int currentPage;
     private int previousTotalItemCount = 0;
-    // True if we are still waiting for the last set of data to load.
     private boolean loading = true;
-    // Sets the starting page index
-    private int startingPageIndex = 0;
+    private int startingPageIndex;
 
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public PaginationScrollListener(int visibleThreshold, int startPage, LinearLayoutManager linearLayoutManager) {
+    protected PaginationScrollListener(int visibleThreshold, int startPage, LinearLayoutManager linearLayoutManager) {
         this.visibleThreshold = visibleThreshold;
         this.mLayoutManager = linearLayoutManager;
         this.startingPageIndex = startPage;

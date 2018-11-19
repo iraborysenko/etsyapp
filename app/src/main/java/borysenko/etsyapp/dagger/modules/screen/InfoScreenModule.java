@@ -1,6 +1,9 @@
 package borysenko.etsyapp.dagger.modules.screen;
 
-import borysenko.etsyapp.ui.info.InfoScreen;
+import android.content.Context;
+
+import borysenko.etsyapp.dagger.ActivityContext;
+import borysenko.etsyapp.ui.info.InfoActivity;
 import dagger.Module;
 import dagger.Provides;
 
@@ -10,16 +13,23 @@ import dagger.Provides;
  * Date: 17/11/18
  * Time: 15:41
  */
-@Module()
+@Module
 public class InfoScreenModule {
-    private final InfoScreen.View mView;
 
-    public InfoScreenModule(InfoScreen.View mView) {
-        this.mView = mView;
+    private InfoActivity mActivity;
+
+    public InfoScreenModule(InfoActivity activity) {
+        mActivity = activity;
     }
 
     @Provides
-    InfoScreen.View providesMovieScreenView() {
-        return mView;
+    @ActivityContext
+    Context provideContext() {
+        return mActivity;
+    }
+
+    @Provides
+    InfoActivity provideActivity() {
+        return mActivity;
     }
 }

@@ -5,7 +5,7 @@ import android.util.Log;
 
 import javax.inject.Inject;
 
-import borysenko.etsyapp.adapter.SearchRecyclerAdapter;
+import borysenko.etsyapp.ui.main.searchtab.adapter.SearchRecyclerAdapter;
 import borysenko.etsyapp.model.Category;
 import borysenko.etsyapp.model.Merchandise;
 import borysenko.etsyapp.model.SearchCategories;
@@ -53,7 +53,7 @@ public class SearchPresenter implements SearchFragmentScreen.Presenter {
         });
     }
 
-    public void loadSearchResult(String categoryQuery, String productQuery, int offsetpoint) {
+    void loadSearchResult(String categoryQuery, String productQuery, int offsetpoint) {
         offsetpoint = offsetpoint*5;
         Call<SearchMerchandise> call =
                 apiInterface.getMerchandiseList(API.KEY, categoryQuery, productQuery, 5, offsetpoint);

@@ -1,7 +1,7 @@
 package borysenko.etsyapp.dagger.components;
 
-import javax.inject.Singleton;
 
+import borysenko.etsyapp.dagger.PerActivity;
 import borysenko.etsyapp.dagger.modules.screen.SelectedFragmentScreenModule;
 import borysenko.etsyapp.ui.main.selectedtab.SelectedFragment;
 import dagger.Component;
@@ -12,8 +12,8 @@ import dagger.Component;
  * Date: 18/11/18
  * Time: 13:13
  */
-@Singleton
-@Component(modules = SelectedFragmentScreenModule.class)
+@PerActivity
+@Component(modules = SelectedFragmentScreenModule.class, dependencies = AppComponent.class)
 public interface SelectedFragmentScreenComponent {
     void inject(SelectedFragment fragment);
 }

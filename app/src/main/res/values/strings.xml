@@ -11,4 +11,6 @@
     <string name="price">Price</string>
     <string name="title">Title</string>
     <string name="save_data">Save data</string>
+    <string name="search_case">Save Data</string>
+    <string name="selected_case">Delete</string>
 </resources>

@@ -1,10 +1,12 @@
 package borysenko.etsyapp.dagger.modules;
 
+import android.app.Application;
 import android.content.Context;
 
 import javax.inject.Singleton;
 
 import borysenko.etsyapp.App;
+import borysenko.etsyapp.dagger.ApplicationContext;
 import dagger.Module;
 import dagger.Provides;
 
@@ -31,7 +33,13 @@ public class AppModule {
 
     @Provides
     @Singleton
+    @ApplicationContext
     Context applicationContext() {
         return mApp.getApplicationContext();
+    }
+
+    @Provides
+    Application provideApplication() {
+        return mApp;
     }
 }

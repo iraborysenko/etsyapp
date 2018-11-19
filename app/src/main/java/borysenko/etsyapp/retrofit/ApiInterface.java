@@ -14,9 +14,11 @@ import retrofit2.http.Query;
  * Time: 17:56
  */
 public interface ApiInterface {
+    //get list of categories
     @GET("taxonomy/categories")
     Call<SearchCategories> getTopCategories(@Query("api_key") String apiKey);
 
+    //get list of merchandises
     @GET("listings/active")
     Call<SearchMerchandise> getMerchandiseList(@Query("api_key") String apiKey,
                                                @Query("category") String categoryQuery,
@@ -24,6 +26,7 @@ public interface ApiInterface {
                                                @Query("limit") int limit,
                                                @Query("offset") int offset);
 
+    //get image for specific merchandise
     @GET("listings/{listing_id}/images")
     Call<String> getImage(@Path("listing_id") String listingId,
                          @Query("api_key") String key);

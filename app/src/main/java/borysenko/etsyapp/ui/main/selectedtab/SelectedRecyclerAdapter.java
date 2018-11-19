@@ -1,4 +1,4 @@
-package borysenko.etsyapp.adapter;
+package borysenko.etsyapp.ui.main.selectedtab;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -13,31 +13,30 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.util.List;
+
 import borysenko.etsyapp.R;
 import borysenko.etsyapp.model.Merchandise;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import java.util.Arrays;
-
 /**
  * Created by Android Studio.
  * User: Iryna
- * Date: 16/11/18
- * Time: 23:21
+ * Date: 18/11/18
+ * Time: 20:26
  */
-public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAdapter.ViewHolder> {
-
+public class SelectedRecyclerAdapter extends RecyclerView.Adapter<SelectedRecyclerAdapter.ViewHolder> {
     private static ClickListener clickListener;
-    private static Merchandise[] mMerch;
+    private static List<Merchandise> mMerchs;
     private Context mContext;
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(R.id.merch_image)
-        ImageView mImage;
-        @BindView(R.id.merch_title)
-        TextView mTitle;
 
+        @BindView(R.id.m_image)
+        ImageView mImage;
+        @BindView(R.id.m_title)
+        TextView mTitle;
 
         ViewHolder(View v) {
             super(v);
@@ -47,23 +46,21 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
 
         @Override
         public void onClick(View v) {
-            Merchandise merchandise = mMerch[getAdapterPosition()];
-            clickListener.onItemClick(v, merchandise);
+            clickListener.onItemClick(v, mMerchs.get(getAdapterPosition()));
         }
-
     }
 
-    public SearchRecyclerAdapter(Merchandise[] merch, Context context) {
-        mMerch = merch;
+    SelectedRecyclerAdapter(List<Merchandise> merchs, Context context) {
+        mMerchs = merchs;
         mContext = context;
     }
 
     @NonNull
     @Override
-    public SearchRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
-                                                               int viewType) {
+    public SelectedRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
+                                                                 int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.main_recycler_item, parent, false);
+                .inflate(R.layout.selected_recycler_item, parent, false);
 
         return new ViewHolder(v);
     }
@@ -71,15 +68,17 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder merchViewHolder, int i) {
 
-        Merchandise merchandise = mMerch[i];
+        Merchandise merchandise = mMerchs.get(i);
+
         if (merchandise != null) {
             RequestOptions options = new RequestOptions()
                     .centerCrop()
                     .placeholder(R.mipmap.ic_launcher_round)
                     .error(R.mipmap.ic_launcher_round)
                     .skipMemoryCache(true)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE);
+                    .diskCacheStrategy(DiskCacheStrategy.ALL);
 
+            assert merchViewHolder.mImage != null;
             Glide.with(mContext)
                     .load(merchandise.getImageUrl())
                     .apply(options)
@@ -87,16 +86,15 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
 
             merchViewHolder.mTitle.setText(merchandise.getTitle());
         }
-
     }
 
     @Override
     public int getItemCount() {
-        return mMerch.length;
+        return mMerchs.size();
     }
 
-    public void setOnItemClickListener(ClickListener clickListener) {
-        SearchRecyclerAdapter.clickListener = clickListener;
+    void setOnItemClickListener(ClickListener clickListener) {
+        SelectedRecyclerAdapter.clickListener = clickListener;
     }
 
     public interface ClickListener {
@@ -104,13 +102,18 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
     }
 
     public void add(Merchandise merchandise) {
-        mMerch = Arrays.copyOf(mMerch, mMerch.length +1);
-        mMerch[mMerch.length - 1] = merchandise;
-        notifyItemInserted(mMerch.length - 1);
+        mMerchs.add(merchandise);
+        notifyItemInserted(mMerchs.size() - 1);
+    }
+
+    void addAll(List<Merchandise> merchandises) {
+        for (Merchandise merch: merchandises) {
+            add(merch);
+        }
     }
 
     public void clear() {
-        mMerch=new Merchandise[0];
+        mMerchs.clear();
         notifyDataSetChanged();
     }
 }

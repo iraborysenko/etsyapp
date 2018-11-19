@@ -9,6 +9,7 @@ import java.io.Serializable;
  * Time: 18:54
  */
 public class Merchandise implements Serializable {
+    private int id;
     private String listingId;
     private String categoryId;
     private String title;
@@ -30,6 +31,10 @@ public class Merchandise implements Serializable {
     }
 
     public Merchandise () {}
+
+    public int getId() {
+        return id;
+    }
 
     public String getListingId() {
         return listingId;
@@ -59,6 +64,10 @@ public class Merchandise implements Serializable {
         return imageUrl;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setListingId(String listingId) {
         this.listingId = listingId;
     }
@@ -86,4 +95,5 @@ public class Merchandise implements Serializable {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
 }
