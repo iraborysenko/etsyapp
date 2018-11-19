@@ -23,6 +23,11 @@ public class ImageDeserializer implements JsonDeserializer {
         JsonArray array = (JsonArray) jsonObject.get("results");
         JsonObject obj =  array.get(0).getAsJsonObject();
 
-        return obj.get("url_170x135").getAsString();
+        String url;
+        if (obj.get("url_170x135").isJsonNull())
+            url = "none";
+        else url = obj.get("url_170x135").getAsString();
+
+        return url;
     }
 }

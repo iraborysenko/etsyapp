@@ -25,7 +25,12 @@ public class MerchandiseDeserializer implements JsonDeserializer {
         String id = jsonObject.get("listing_id").getAsString();
         String categoryId = jsonObject.get("category_id").getAsString();
         String title = jsonObject.get("title").getAsString();
-        String description = jsonObject.get("description").getAsString();
+
+        String description;
+        if (jsonObject.get("description").isJsonNull())
+            description = "none";
+        else description = jsonObject.get("description").getAsString();
+
         String price = jsonObject.get("price").getAsString();
         String currencyCode = jsonObject.get("currency_code").getAsString();
 
