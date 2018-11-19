@@ -75,9 +75,9 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
         if (merchandise != null) {
             RequestOptions options = new RequestOptions()
                     .centerCrop()
-                    .placeholder(R.mipmap.ic_launcher_round)
-                    .error(R.mipmap.ic_launcher_round)
-                    .skipMemoryCache(true)
+                    .placeholder(R.mipmap.product_placeholder)
+                    .error(R.mipmap.no_image)
+                    .skipMemoryCache(false)
                     .diskCacheStrategy(DiskCacheStrategy.ALL);
 
             Glide.with(mContext)

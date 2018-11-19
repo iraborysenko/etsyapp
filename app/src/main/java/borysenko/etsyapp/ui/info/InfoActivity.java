@@ -86,7 +86,9 @@ public class InfoActivity extends AppCompatActivity {
         mDescription.setText(curMerchandise.getDescription());
 
         RequestOptions options = new RequestOptions()
-                .skipMemoryCache(true)
+                .placeholder(R.mipmap.product_placeholder)
+                .error(R.mipmap.no_image)
+                .skipMemoryCache(false)
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
         Glide.with(this)
                 .asBitmap()
