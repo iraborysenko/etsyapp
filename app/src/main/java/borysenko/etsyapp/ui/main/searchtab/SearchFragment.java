@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,6 +47,7 @@ public class SearchFragment extends Fragment implements SearchFragmentScreen.Vie
     SearchPresenter mPresenter;
 
     @BindView(R.id.autoCompleteCategory) AutoCompleteTextView autoCompleteCategory;
+    @BindView(R.id.swipe_container) SwipeRefreshLayout swipeContainer;
     @BindView(R.id.product_query) EditText productEdit;
     @BindView(R.id.search_button) Button searchButton;
     Category[] categoriesList;
@@ -83,8 +85,25 @@ public class SearchFragment extends Fragment implements SearchFragmentScreen.Vie
         recyclerView.setLayoutManager(linearLayoutManager);
         mAdapter = initRecyclerView();
 
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                offsetPoint=0;
+                mAdapter.clear();
+                mPresenter.loadSearchResult(categoryQuery, productQuery, offsetPoint);
+                swipeContainer.setRefreshing(false);
+            }
+        });
+
+        swipeContainer.setColorSchemeResources(
+                android.R.color.holo_orange_light,
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light);
         return view;
     }
+
+    //---------------------------------------------------------------------------------------
 
     @Override
     public void setSearchCategoryResult(Category[] categories) {
@@ -94,20 +113,14 @@ public class SearchFragment extends Fragment implements SearchFragmentScreen.Vie
             catList.add(category.getShortName());
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                getActivity(), android.R.layout.simple_dropdown_item_1line, catList);
-        autoCompleteCategory.setAdapter(adapter);
-        autoCompleteCategory.setOnItemClickListener(autoItemSelectedListener);
-        categoriesList = categories;
-    }
+        if (getActivity() != null) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                    getActivity(), android.R.layout.simple_dropdown_item_1line, catList);
+            autoCompleteCategory.setAdapter(adapter);
+            autoCompleteCategory.setOnItemClickListener(autoItemSelectedListener);
+            categoriesList = categories;
+        } else throw new RuntimeException("null returned from getActivity()");
 
-    //get result by request. doesn't include pictures
-    @Override
-    public void resultWithNoPic(Merchandise[] merchandises) {
-        merchs = merchandises;
-        for (Merchandise merchandise: merchandises) {
-            mPresenter.getImageForTheMerchandise(merchandise, mAdapter);
-        }
     }
 
     //verify if category item was selected
@@ -122,6 +135,8 @@ public class SearchFragment extends Fragment implements SearchFragmentScreen.Vie
             };
 
     //get data for request
+    //decide to choose an AutoCompleteView in case if the list of categories
+    // may be too big for spinner. think it's more convenient
     @OnClick(R.id.search_button)
     void getRequestData() {
         productQuery = productEdit.getText().toString();
@@ -139,6 +154,17 @@ public class SearchFragment extends Fragment implements SearchFragmentScreen.Vie
         offsetPoint=0;
         mPresenter.loadSearchResult(categoryQuery, productQuery, offsetPoint);
     }
+
+    public void hideKeyBoard() {
+        final InputMethodManager imm;
+        if (getActivity() != null) {
+            imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            assert imm != null;
+            imm.hideSoftInputFromWindow(searchButton.getWindowToken(), 0);
+        } else throw new RuntimeException("null returned from getActivity()");
+    }
+
+    //---------------------------------------------------------------------------------------
 
     public SearchRecyclerAdapter initRecyclerView() {
         final SearchRecyclerAdapter mAdapter = new SearchRecyclerAdapter(new Merchandise[0], getActivity());
@@ -161,16 +187,21 @@ public class SearchFragment extends Fragment implements SearchFragmentScreen.Vie
         return mAdapter;
     }
 
+    //---------------------------------------------------------------------------------------
+
+    //get result by request. doesn't include pictures
+    @Override
+    public void resultWithNoPic(Merchandise[] merchandises) {
+        merchs = merchandises;
+        for (Merchandise merchandise: merchandises) {
+            mPresenter.getImageForTheMerchandise(merchandise, mAdapter);
+        }
+    }
+
     private void detailInfo(Merchandise merchandise) {
         Intent intent = new Intent(getActivity(), InfoActivity.class);
         intent.putExtra("EXTRA_MERCHANDISE", merchandise);
         intent.putExtra("EXTRA_FRAGMENT", "Search");
         startActivity(intent);
-    }
-
-    public void hideKeyBoard() {
-        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        assert imm != null;
-        imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
     }
 }
